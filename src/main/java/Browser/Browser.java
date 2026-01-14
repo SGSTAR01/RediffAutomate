@@ -1,5 +1,8 @@
 package Browser;
 
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -8,6 +11,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 
 public class Browser {
@@ -40,6 +45,17 @@ public class Browser {
             wait = new WebDriverWait(driver, Duration.ofSeconds(15));
             wait.until(ExpectedConditions.titleIs(title));
         } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void screenShot(String name) {
+        try {
+            TakesScreenshot screenshot = (TakesScreenshot) driver;
+            File source = screenshot.getScreenshotAs(OutputType.FILE);
+            File destination = new File("target/screenshot/" + name + ".png");
+            FileUtils.copyFile(source, destination);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

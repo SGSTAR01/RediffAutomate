@@ -9,6 +9,7 @@ public class Demo {
 
         Browser.openBrowser();
         Browser.title("Rediff.com: News | Rediffmail | Stock Quotes | Rediff Gurus");
+        Browser.screenShot("HomePage");
         HomePage.click("Create Account");
         Browser.closeBrowser();
     }
